@@ -1,9 +1,6 @@
 (ns derri.core)
 
-;;(defn roman-lookup [c] (get  {\I 1 \V 5 \X 10 \L 50 \C 100 \D 500 \M 1000}) c)
-
-;;(defn roman-seq [s] (map roman-lookup s))
-
+;; Read Roman numerals
 (fn [s]
   ;; reverse a list of translated romans "XIV" -> (10 1 5) -> (5 1 10)
   (let [rrs (reverse (map #(get {\I 1 \V 5 \X 10 \L 50 \C 100 \D 500 \M 1000} %) s))]
@@ -38,10 +35,11 @@
          y (int (/ i w))
          life \#]                               ;; life
    ;; sum up neighbors
-     (reduce + (list (if (> x 0) (if (= (nth (nth coll y) (dec x)) life) 1 0) 0)                     
-                     (if (> y 0) (if (= (nth (nth coll (dec y)) x) life) 1 0) 0)
-                     (if (< x (dec w)) (if (= (nth (nth coll y) (inc x)) life) 1 0) 0) 
-                     (if (< y (dec h)) (if (= (nth (nth coll (inc y)) x) life) 1 0) 0)
+     (reduce + (list (if (> x 0) (if (= (nth (nth coll y) (dec x)) life) 1 0) 0)            ;; x - 1 , y          
+                     (if (> y 0) (if (= (nth (nth coll (dec y)) x) life) 1 0) 0)            ;; x     , y - 1  
+                     (if (< x (dec w)) (if (= (nth (nth coll y) (inc x)) life) 1 0) 0)      ;; x + 1 , y 
+                     (if (< y (dec h)) (if (= (nth (nth coll (inc y)) x) life) 1 0) 0)      ;; x     , y + 1
+                                                                                            ;; diagonals
                      (if (and (> x 0) (> y 0))       (if (= (nth (nth coll (dec y)) (dec x)) life) 1 0) 0)
                      (if (and (> x 0) (< y (dec h))) (if (= (nth (nth coll (inc y)) (dec x)) life) 1 0) 0)
                      (if (and (< x (dec w)) (> y 0)) (if (= (nth (nth coll (dec y)) (inc x)) life) 1 0) 0)
@@ -50,5 +48,5 @@
               (0 1) " "        ;;  0 or 1 --> dead
               (2 3) \#         ;;  2 or 3 --> alive
               " ")             ;;  > 3    --> dead
-            (if (= n 3) \# " ")))  ;; dead cells with 3 neighbors come alive
-       (range 0 (* (count (first xcoll)) (count xcoll)))))))  ; range to map over indexes
+            (if (= n 3) \# " ")))                             ;; dead cells with 3 neighbors come alive
+       (range 0 (* (count (first xcoll)) (count xcoll)))))))  ;; range to map over indexes
