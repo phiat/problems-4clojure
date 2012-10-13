@@ -1,8 +1,8 @@
 (ns derri.core)
 
-(defn roman-lookup [c] (get  {\I 1 \V 5 \X 10 \L 50 \C 100 \D 500 \M 1000}) c)
+;;(defn roman-lookup [c] (get  {\I 1 \V 5 \X 10 \L 50 \C 100 \D 500 \M 1000}) c)
 
-(defn roman-seq [s] (map roman-lookup s))
+;;(defn roman-seq [s] (map roman-lookup s))
 
 (fn [s]
   ;; reverse a list of translated romans "XIV" -> (10 1 5) -> (5 1 10)
