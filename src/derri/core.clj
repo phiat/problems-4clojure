@@ -41,7 +41,9 @@
                      (if (and (> x 0) (> y 0))       (if (= (nth (nth coll (dec y)) (dec x)) life) 1 0) 0)
                      (if (and (> x 0) (< y (dec h))) (if (= (nth (nth coll (inc y)) (dec x)) life) 1 0) 0)
                      (if (and (< x (dec w)) (> y 0)) (if (= (nth (nth coll (dec y)) (inc x)) life) 1 0) 0)
-                     (if (and (< x (dec w)) (< y (dec h))) (if (= (nth (nth coll (inc y)) (inc x)) life) 1 0) 0))))) xcoll %)]           (if (= cell \#)
+                     (if (and (< x (dec w)) (< y (dec h))) (if (= (nth (nth coll (inc y)) (inc x)) life) 1 0) 0))))) xcoll %)]
+
+       (if (= cell \#)
             (case n            ;; evaluate living cells
               (0 1) " "        ;;  0 or 1 --> dead
               (2 3) \#         ;;  2 or 3 --> alive
