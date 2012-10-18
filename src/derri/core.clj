@@ -50,3 +50,35 @@
               " ")             ;;  > 3    --> dead
             (if (= n 3) \# " ")))                             ;; dead cells with 3 neighbors come alive
        (range 0 (* (count (first xcoll)) (count xcoll)))))))  ;; range to map over indexes
+
+
+;; analyze tic-tac-toe
+;;    return :x or :o if X or O wins, otherwise, nil
+;;  (= nil (__ [[:x :o :x]    
+;;              [:x :o :x] 
+;;              [:o :x :o]]
+;;  (= :x (__  [[:x :e :o]
+;;              [:x :e :e]
+;;              [:x :e :o]]))
+;;
+(fn [b] (let [r1 (first b)                          ;;rows
+              r2 (second b)
+              r3 (last b)
+              c1 (map first [r1 r2 r3])             ;;cols
+              c2 (map second [r1 r2 r3])
+              c3 (map last [r1 r2 r3])
+              d1 [(first r1) (second r2) (last r3)] ;;diagonals
+              d2 [(last r1) (second r2) (first r3)]
+              tx (fn [r] (if (every? #(= % :x) r) :x nil))  ;; is the triplet all x's
+              to (fn [r] (if (every? #(= % :o) r) :o nil))  ;; is the triplet all o's
+              fa [  (tx r1) (tx r2) (tx r3)         ;; test each triplet
+                    (to r1) (to r2) (to r3)         ;; will return [ nil nil :x :x nil ...]
+                    (tx c1) (tx c2) (tx c3)
+                    (to c1) (to c2) (to c3)
+                    (tx d1) (tx d2)
+                    (to d1) (to d2)]
+              fxi (.indexOf fa :x)                 ;; returns > 0 if found
+              foi (.indexOf fa :o)]
+           (cond (> fxi -1) :x                     ;; test returns
+                 (> foi -1) :o
+                 :else nil)))
