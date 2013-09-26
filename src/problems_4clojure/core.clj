@@ -87,6 +87,39 @@
                  (> foi -1) :o
                  :else nil)))
     
+;; best poker hand
+(fn [hand]
+  (let [suit (fn [c] (first c))
+        rank (fn [c] (last c))
+        ranks [\2 \3 \4 \5 \6 \7 \8 \9 \T \J \Q \K \A]
+        four-of-a-kind? (fn [h] (if (some #(= 4 %) (vals (frequencies (map rank h)))) true false))
+        flush?          (fn [h]   (= 1 (count (vals (frequencies (map suit h))))))
+        straight?       (fn [h] (let [indexed-ranks (sort (map #(.indexOf ranks %) (map rank h)))
+                                  ends-diff (- (first indexed-ranks) (last indexed-ranks))]
+                              (cond
+                               (and (= 5 (count (frequencies indexed-ranks)))
+                               (= ends-diff -4)) true
+                               (= indexed-ranks '(0 1 2 3 12)) true
+                               :else false)))
 
+        trips?       (fn [h]  (if (some #(= 3 %) (vals (frequencies (map rank h)))) true false))
+        two-pair?    (fn [h](if (= 3 (count (frequencies (map rank h)))) true false))
+        pair?        (fn [h](if (some #(= 2 %) (vals (frequencies (map rank h)))) true false))
+        straight-flush? (fn [h] (and (straight? h) (flush? h)))
+        full-house?     (fn [h] (= 2 (count (frequencies (map rank h) ))))
+        ]
+
+
+
+  (cond
+   (straight-flush? hand) :straight-flush
+   (four-of-a-kind? hand) :four-of-a-kind
+   (full-house? hand)     :full-house
+   (flush? hand)          :flush
+   (straight? hand)       :straight
+   (trips? hand) :three-of-a-kind
+   (two-pair? hand)       :two-pair
+   (pair? hand)           :pair
+   :else               :high-card   )))
 ;; 
 
