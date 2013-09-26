@@ -2,30 +2,6 @@
 
 ;; solutions to 'hard' problems at http://www.4clojure.com/
 
-;; Analyze a Tic-Tac-Toe Board
-(fn [b] (let [r1 (first b) 
-              r2 (second b) 
-              r3 (last b)
-              c1 (map first [r1 r2 r3])
-              c2 (map second [r1 r2 r3])
-              c3 (map last [r1 r2 r3])
-              d1 [(first r1) (second r2) (last r3)]
-              d2 [(last r1) (second r2) (first r3)]
-              tx (fn [r] (if (every? #(= % :x) r) :x nil))
-              to (fn [r] (if (every? #(= % :o) r) :o nil))
-              fa  [  (tx r1) (tx r2) (tx r3) 
-                     (to r1) (to r2) (to r3)
-                     (tx c1) (tx c2) (tx c3)
-                     (to c1) (to c2) (to c3)
-                     (tx d1) (tx d2)
-                     (to d1) (to d2)]
-              fxi (.indexOf fa :x)
-              foi (.indexOf fa :o)]
-         (cond (> fxi -1) :x
-               (> foi -1) :o
-               :else nil)))
-
-
 ;; Read Roman numerals
 (fn [s]
   ;; reverse a list of translated romans "XIV" -> (10 1 5) -> (5 1 10)
