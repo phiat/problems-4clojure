@@ -87,7 +87,7 @@
                  (> foi -1) :o
                  :else nil)))
     
-;; best poker hand
+;; best poker hand   - see best-hand.clj
 (fn [hand]
   (let [suit (fn [c] (first c))
         rank (fn [c] (last c))
