@@ -1,6 +1,8 @@
 # problems-4clojure
 
-a repo for solutions to 'hard' problems at [4clojure](http://www.4clojure.com/)
+a repo for solutions to problems at [4clojure](http://www.4clojure.com/)
+
+split into elementary (elementary.core) and hard (core.clj)
 
 ## Usage
 
